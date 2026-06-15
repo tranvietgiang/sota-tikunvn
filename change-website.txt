@@ -22,3 +22,8 @@
   - heading: `table_static`, type = `home-news-heading`
   - danh sách tin: `table_news`, type = `home-news`
 * Thêm hiệu ứng news card: fade-up so le khi lướt tới, hover card nổi lên, ảnh zoom nhẹ và tiêu đề đổi màu đỏ.
+* Sửa GitHub Action deploy InfinityFree:
+  - hard-code DB host/user/name của InfinityFree trong workflow
+  - chỉ dùng secret `DB_PASS` cho mật khẩu database
+  - dùng secret `INFINITYFREE_PASSWORD` cho mật khẩu FTP
+  - giữ `libraries/config.php` chạy local bằng WAMP, khi deploy Action tự thay sang thông tin hosting

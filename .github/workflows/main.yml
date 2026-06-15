@@ -15,15 +15,12 @@ jobs:
 
       - name: Create production config
         env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_USER: ${{ secrets.DB_USER }}
           DB_PASS: ${{ secrets.DB_PASS }}
-          DB_NAME: ${{ secrets.DB_NAME }}
         run: |
-          sed -i "s/'host' => 'localhost'/'host' => '$DB_HOST'/" libraries/config.php
-          sed -i "s/'username' => 'root'/'username' => '$DB_USER'/" libraries/config.php
+          sed -i "s/'host' => 'localhost'/'host' => 'sql210.infinityfree.com'/" libraries/config.php
+          sed -i "s/'username' => 'root'/'username' => 'if0_42184596'/" libraries/config.php
           sed -i "s/'password' => ''/'password' => '$DB_PASS'/" libraries/config.php
-          sed -i "s/'dbname' => 'tikunvn'/'dbname' => '$DB_NAME'/" libraries/config.php
+          sed -i "s/'dbname' => 'tikunvn'/'dbname' => 'if0_42184596_cicd_tinkun'/" libraries/config.php
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
