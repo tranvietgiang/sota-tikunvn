@@ -1,9 +1,11 @@
 name: Deploy website cicd-tikunvn
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+      - feature/cicd-git-action
 
 jobs:
   deploy:
@@ -34,4 +36,7 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
+            **/*.sql
+            logs/**
+            caches/**
             .env
