@@ -13,32 +13,17 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Deploy by SSH
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd /path/to/website
-            git pull origin main
-
-Can them trong GitHub repository:
-Settings -> Secrets and variables -> Actions -> New repository secret
-
-SSH_HOST      = IP hoac domain server
-SSH_USER      = username SSH
-SSH_PASSWORD  = mat khau SSH
-SSH_PORT      = cong SSH, thuong la 22
-
-Neu server dung key thay password thi doi thanh:
-
-with:
-  host: ${{ secrets.SSH_HOST }}
-  username: ${{ secrets.SSH_USER }}
-  key: ${{ secrets.SSH_KEY }}
-  port: ${{ secrets.SSH_PORT }}
-  script: |
-    cd /path/to/website
-    git pull origin main
+          server: ftpupload.net
+          username: if0_42184596
+          password: ${{ secrets.INFINITYFREE_PASSWORD }}
+          local-dir: ./ # thư mục source code local
+          server-dir: /htdocs/ # thư mục trên server
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .env
+            config.php
