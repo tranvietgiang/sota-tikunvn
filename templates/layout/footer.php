@@ -33,10 +33,10 @@
 
 <div class="quick-contact" aria-label="Liên hệ nhanh">
     <a href="https://zalo.me/0942429989" target="_blank" rel="noopener" aria-label="Chat Zalo">
-        <img src="assets/images/zalo.png" alt="">
+        <img src="assets/images/zalo-icon.png" alt="">
     </a>
     <a href="tel:0942429989" aria-label="Gọi điện">
-        <img src="assets/images/phone.png" alt="">
+        <img src="assets/images/phone-circle.png" alt="">
     </a>
     <button type="button" class="back-to-top" data-back-to-top aria-label="Lên đầu trang">
         ↑

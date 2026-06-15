@@ -1,15 +1,38 @@
-<?php if (!defined('SOURCES')) die("Error"); ?>
+<?php
+if (!defined('SOURCES')) die("Error");
+
+if (!function_exists('homeImagePath')) {
+    function homeImagePath($photo, $fallback)
+    {
+        if ($photo == '') return $fallback;
+        if (strpos($photo, 'assets/') === 0 || strpos($photo, 'http') === 0) return $photo;
+        return UPLOAD_PHOTO_L . $photo;
+    }
+}
+
+$hero = (!empty($slider) && is_array($slider)) ? $slider[0] : array();
+$heroTitle = !empty($hero['ten' . $lang]) ? $hero['ten' . $lang] : 'error';
+$heroDesc = !empty($hero['mota' . $lang]) ? $hero['mota' . $lang] : 'error';
+$heroPhoto = !empty($hero['photo']) ? $hero['photo'] : '';
+$heroImage = homeImagePath($heroPhoto, 'assets/images/titkul-luc-giac.png');
+$heroLink = !empty($hero['link']) ? $hero['link'] : '#dangkytuvan';
+
+$intro = $d->rawQueryOne("select ten$lang, mota$lang, photo, link from #_photo where type = ? and hienthi > 0 order by stt,id desc limit 0,1", array('slider-2'));
+$introTitle = !empty($intro['ten' . $lang]) ? $intro['ten' . $lang] : 'Titkul';
+$introDesc = !empty($intro['mota' . $lang]) ? $intro['mota' . $lang] : 'Công ty sản xuất phần mềm ứng dụng Quản lý trường học, theo định hướng chuyển đổi số, có kết nối trục dữ liệu dùng chung của Ngành. Phần mềm của Titkul đã được Sở GD & ĐT Tp.HCM chấp thuận và đã triển khai tại nhiều cấp trường.';
+$introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'assets/images/titkul.png');
+?>
 
 <main class="site-main">
     <section class="hero-section">
         <div class="site-container hero-grid">
             <div class="hero-copy">
-                <h1>Tit<span>Kul</span></h1>
-                <p class="hero-subtitle">Ứng dụng chuyển đổi số Trường học<br>từ cấp Mầm non đến Phổ thông</p>
-                <a class="btn btn-primary" href="#dangkytuvan">Đăng Ký Tư Vấn Ngay</a>
+                <h1><?= htmlspecialchars_decode($heroTitle) ?></h1>
+                <p class="hero-subtitle"><?= htmlspecialchars_decode($heroDesc) ?></p>
+                <a class="btn btn-primary" href="<?= $heroLink ?>">Đăng Ký Tư Vấn Ngay</a>
             </div>
             <div class="hero-image">
-                <img src="https://titkul.vn/wp-content/uploads/2024/06/titkul-luc-giac.png" alt="Titkul chuyển đổi số trường học">
+                <img src="<?= $heroImage ?>" alt="<?= htmlspecialchars(strip_tags($heroTitle)) ?>">
                 <p>Năng động - Chuyên nghiệp - Thực tiễn</p>
             </div>
         </div>
@@ -17,13 +40,13 @@
 
     <section class="logo-section">
         <div class="site-container">
-            <img src="https://titkul.vn/wp-content/uploads/2024/01/Titkul-logo-header-web-1.png" alt="Titkul">
+            <img src="<?= $introImage ?>" alt="<?= htmlspecialchars(strip_tags($introTitle)) ?>">
         </div>
     </section>
 
     <section class="intro-section">
         <div class="site-container narrow">
-            <p>Công ty sản xuất phần mềm ứng dụng Quản lý trường học, theo định hướng chuyển đổi số, có kết nối trục dữ liệu dùng chung của Ngành. Phần mềm của Titkul đã được Sở GD &amp; ĐT Tp.HCM chấp thuận và đã triển khai tại nhiều cấp trường.</p>
+            <p><?= htmlspecialchars_decode($introDesc) ?></p>
         </div>
     </section>
 
