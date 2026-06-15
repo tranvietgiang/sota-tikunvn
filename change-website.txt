@@ -1,0 +1,24 @@
+# CHANGELOG — Titkul Website
+
+## [2026-06-15]
+
+### HEADER
+
+* Điều chỉnh hiệu ứng hover cho menu, đổi màu chữ sang đỏ.
+* Thêm đường gạch đen bên trái mục menu khi hover.
+
+### MAIN
+
+* Cải thiện hiệu ứng tương tác cho hình ảnh dạng hexagon với hiệu ứng phóng to nhẹ khi rê chuột.
+* Bổ sung tính năng phóng to hình ảnh khi nhấn vào, hỗ trợ thu nhỏ bằng cách nhấn lại hoặc sử dụng phím `Esc`.
+* Thêm hiệu ứng xuất hiện từ dưới lên (`fade-up`) khi người dùng cuộn trang.
+* Bổ sung hiệu ứng gõ chữ tự động (typewriter) khi nội dung xuất hiện trong màn hình.
+* Thêm hiệu ứng cho nhóm audience card: fade-up so le khi lướt tới, hover ảnh phóng nhẹ và tiêu đề/link đổi màu đỏ.
+* Connect phần "CÁC TRƯỜNG TIÊU BIỂU" vào database:
+  - heading: `table_static`, type = `home-schools-heading`
+  - logo trường: `table_photo`, type = `home-school`
+* Đổi hiệu ứng logo trường tiêu biểu thành dải logo chạy qua lại, hover logo thì dừng animation và logo nổi nhẹ.
+* Connect phần "TIN TỨC SỰ KIỆN" vào database:
+  - heading: `table_static`, type = `home-news-heading`
+  - danh sách tin: `table_news`, type = `home-news`
+* Thêm hiệu ứng news card: fade-up so le khi lướt tới, hover card nổi lên, ảnh zoom nhẹ và tiêu đề đổi màu đỏ.

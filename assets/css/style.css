@@ -41,6 +41,19 @@ img {
   margin: 0 auto;
 }
 
+.site-container.reveal-ready {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+}
+
+.site-container.reveal-ready.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .narrow {
   max-width: 980px;
 }
@@ -248,6 +261,11 @@ img {
 .hero-image img {
   width: min(100%, 560px);
   margin: 0 auto;
+  cursor: zoom-in;
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+  transform-origin: center center;
 }
 
 .hero-image p {
@@ -255,6 +273,18 @@ img {
   color: var(--red);
   font-size: 24px;
   font-weight: 800;
+}
+
+.hero-image img:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0 18px 28px rgba(10, 52, 113, 0.18));
+}
+
+.hero-image img.is-zoomed {
+  cursor: zoom-out;
+  transform: scale(1.65);
+  filter: drop-shadow(0 24px 40px rgba(10, 52, 113, 0.24));
+  z-index: 5;
 }
 
 .btn {
@@ -392,6 +422,22 @@ img {
 
 .benefit-card {
   text-align: center;
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+  transition:
+    opacity 0.55s ease var(--delay, 0s),
+    transform 0.55s ease var(--delay, 0s),
+    box-shadow 0.25s ease;
+}
+
+.benefit-grid.is-visible .benefit-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 42px rgba(20, 54, 92, 0.16);
 }
 
 .benefit-icon {
@@ -405,6 +451,14 @@ img {
   color: #fff;
   font-size: 22px;
   font-weight: 900;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  background: var(--red);
+  transform: rotate(-4deg) scale(1.08);
 }
 
 .benefit-card p {
@@ -484,22 +538,32 @@ img {
 }
 
 .audience-grid {
+  margin-top: 80px;
   grid-template-columns: repeat(4, 1fr);
 }
 
 .audience-card {
   text-align: center;
+  opacity: 0;
+  transform: translateY(34px) scale(0.96);
+  transition:
+    opacity 0.58s ease var(--delay, 0s),
+    transform 0.58s ease var(--delay, 0s);
 }
 
 .audience-card img {
   width: 120px;
   margin: 0 auto 18px;
+  transition:
+    transform 0.28s ease,
+    filter 0.28s ease;
 }
 
 .audience-card h3 {
   margin: 0 0 12px;
   color: var(--blue-dark);
   font-size: 18px;
+  transition: color 0.25s ease;
 }
 
 .audience-card p {
@@ -512,6 +576,63 @@ img {
   color: var(--blue);
   font-size: 13px;
   font-weight: 900;
+  transition: color 0.25s ease;
+}
+
+.audience-grid.is-visible .audience-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.audience-card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.audience-card:hover img {
+  transform: translateY(-8px) scale(1.1) rotate(-2deg);
+  filter: drop-shadow(0 16px 20px rgba(20, 54, 92, 0.18));
+}
+
+.audience-card:hover h3,
+.audience-card:hover a {
+  color: var(--red);
+}
+
+.audience-card:nth-child(1) {
+  --delay: 0s;
+}
+
+.audience-card:nth-child(2) {
+  --delay: 0.12s;
+}
+
+.audience-card:nth-child(3) {
+  --delay: 0.24s;
+}
+
+.audience-card:nth-child(4) {
+  --delay: 0.36s;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+/* So le từng card */
+.audience-card:nth-child(1) {
+  margin-top: 0px;
+}
+.audience-card:nth-child(2) {
+  margin-top: 80px;
+}
+.audience-card:nth-child(3) {
+  margin-top: -20px;
+}
+.audience-card:nth-child(4) {
+  margin-top: 50px;
 }
 
 .consult-section {
@@ -556,18 +677,78 @@ img {
 }
 
 .school-logos {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 18px;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 34px;
+  padding: 8px 0;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
 }
 
-.school-logos img {
-  width: 100%;
+.school-logo-track {
+  display: flex;
+  width: max-content;
+  gap: 18px;
+  animation: school-logo-shuttle 18s ease-in-out infinite alternate;
+}
+
+.school-logos:hover .school-logo-track {
+  animation-play-state: paused;
+}
+
+.school-logo-item {
+  display: grid;
+  flex: 0 0 170px;
+  place-items: center;
+  min-height: 124px;
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.school-logo-item:hover {
+  border-color: rgba(228, 35, 31, 0.35);
+  box-shadow: 0 16px 34px rgba(20, 54, 92, 0.14);
+  transform: translateY(-8px) scale(1.04);
+}
+
+.school-logo-item img {
+  width: 100%;
+  max-height: 96px;
+  object-fit: contain;
+}
+
+@keyframes school-logo-shuttle {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .school-logo-track {
+    animation: none;
+  }
 }
 
 .video-section {
@@ -601,17 +782,49 @@ img {
 .news-card {
   padding: 0;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(34px) scale(0.96);
+  transition:
+    opacity 0.58s ease var(--delay, 0s),
+    transform 0.58s ease var(--delay, 0s),
+    box-shadow 0.28s ease;
+}
+
+.news-card a {
+  display: block;
+  height: 100%;
+  color: inherit;
+}
+
+.news-grid.is-visible .news-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.news-card:hover {
+  box-shadow: 0 20px 42px rgba(20, 54, 92, 0.16);
+  transform: translateY(-10px) scale(1.02);
 }
 
 .news-card img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.news-card:hover img {
+  transform: scale(1.08);
 }
 
 .news-card h3 {
   padding: 18px;
   font-size: 16px;
+  transition: color 0.25s ease;
+}
+
+.news-card:hover h3 {
+  color: var(--red);
 }
 
 .site-footer {
@@ -833,6 +1046,15 @@ img {
   .news-grid,
   .school-logos {
     grid-template-columns: 1fr;
+  }
+
+  .school-logo-track {
+    gap: 12px;
+  }
+
+  .school-logo-item {
+    flex-basis: 142px;
+    min-height: 108px;
   }
 
   .consult-form button {

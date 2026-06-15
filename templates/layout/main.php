@@ -18,9 +18,23 @@ $heroImage = homeImagePath($heroPhoto, 'assets/images/titkul-luc-giac.png');
 $heroLink = !empty($hero['link']) ? $hero['link'] : '#dangkytuvan';
 
 $intro = $d->rawQueryOne("select ten$lang, mota$lang, photo, link from #_photo where type = ? and hienthi > 0 order by stt,id desc limit 0,1", array('slider-2'));
-$introTitle = !empty($intro['ten' . $lang]) ? $intro['ten' . $lang] : 'Titkul';
-$introDesc = !empty($intro['mota' . $lang]) ? $intro['mota' . $lang] : 'Công ty sản xuất phần mềm ứng dụng Quản lý trường học, theo định hướng chuyển đổi số, có kết nối trục dữ liệu dùng chung của Ngành. Phần mềm của Titkul đã được Sở GD & ĐT Tp.HCM chấp thuận và đã triển khai tại nhiều cấp trường.';
+$introTitle = !empty($intro['ten' . $lang]) ? $intro['ten' . $lang] : 'error';
+$introDesc = !empty($intro['mota' . $lang]) ? $intro['mota' . $lang] : 'error';
 $introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'assets/images/titkul.png');
+
+$homeProduct = $d->rawQueryOne("select ten$lang, mota$lang, noidung$lang, photo from #_static where type = ? and hienthi > 0 limit 0,1", array('home-product'));
+$homeProductEyebrow = !empty($homeProduct['ten' . $lang]) ? $homeProduct['ten' . $lang] : 'error';
+$homeProductTitle = !empty($homeProduct['mota' . $lang]) ? $homeProduct['mota' . $lang] : 'error';
+$homeProductDesc = !empty($homeProduct['noidung' . $lang]) ? $homeProduct['noidung' . $lang] : 'error';
+$homeProductImage = homeImagePath(!empty($homeProduct['photo']) ? $homeProduct['photo'] : '', 'assets/images/Titkul-da-nen-tang.png');
+
+$benefitHeading = $d->rawQueryOne("select ten$lang, noidung$lang from #_static where type = ? and hienthi > 0 limit 0,1", array('home-benefit-heading'));
+$benefitItems = $d->rawQuery("select ten$lang, mota$lang from #_news where type = ? and hienthi > 0 order by stt,id asc", array('home-benefit'));
+$schoolsHeading = $d->rawQueryOne("select ten$lang from #_static where type = ? and hienthi > 0 limit 0,1", array('home-schools-heading'));
+$schoolLogos = $d->rawQuery("select ten$lang, photo, link from #_photo where type = ? and hienthi > 0 order by stt,id asc", array('home-school'));
+$newsHeading = $d->rawQueryOne("select ten$lang from #_static where type = ? and hienthi > 0 limit 0,1", array('home-news-heading'));
+$homeNews = $d->rawQuery("select ten$lang, photo, link from #_news where type = ? and hienthi > 0 order by stt,id asc limit 0,4", array('home-news'));
+
 ?>
 
 <main class="site-main">
@@ -40,12 +54,12 @@ $introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'ass
 
     <section class="logo-section">
         <div class="site-container">
-            <img src="<?= $introImage ?>" alt="<?= htmlspecialchars(strip_tags($introTitle)) ?>">
+            <img class="7-giac" src="<?= $introImage ?>" alt="<?= htmlspecialchars(strip_tags($introTitle)) ?>">
         </div>
     </section>
 
     <section class="intro-section">
-        <div class="site-container narrow">
+        <div class="site-container narrow js-run-word-effect">
             <p><?= htmlspecialchars_decode($introDesc) ?></p>
         </div>
     </section>
@@ -53,10 +67,10 @@ $introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'ass
     <section class="product-section">
         <div class="site-container product-grid">
             <div class="product-copy">
-                <p class="section-eyebrow">PHẦN MỀM ỨNG DỤNG</p>
-                <h2>CHUYỂN ĐỔI SỐ TRƯỜNG HỌC</h2>
-                <p>Phần mềm ứng dụng của Titkul là nền tảng số hoá, giúp nhà trường dễ dàng quản lý điều hành công tác chuyên môn, kết nối và tương tác giữa Gia đình và nhà trường và Cơ quan quản lý ngành (Sở/Phòng giáo dục).</p>
-                <img src="https://titkul.vn/wp-content/uploads/2024/09/Titkul-da-nen-tang.png" alt="Titkul đa nền tảng">
+                <p class="section-eyebrow"><?= htmlspecialchars_decode($homeProductEyebrow) ?></p>
+                <h2><?= htmlspecialchars_decode($homeProductTitle) ?></h2>
+                <p><?= htmlspecialchars_decode($homeProductDesc) ?></p>
+                <img src="<?= $homeProductImage ?>" alt="<?= htmlspecialchars(strip_tags($homeProductTitle)) ?>">
             </div>
             <div class="product-actions">
                 <a class="btn btn-secondary" href="HDSchool">HDSchool</a>
@@ -67,22 +81,16 @@ $introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'ass
 
     <section class="benefit-section">
         <div class="site-container narrow section-heading center">
-            <h2>TIT<span>KUL</span> MANG LẠI LỢI ÍCH GÌ CHO NHÀ TRƯỜNG?</h2>
-            <p>Phần mềm Quản Lý Trường Học của Titkul, cùng với hệ sinh thái ứng dụng tương tác học đường, giúp tăng cường hiệu quả quản lý trường học theo đúng định hướng chuyển đổi số của Ngành Giáo dục.</p>
+            <h2><?= htmlspecialchars_decode(!empty($benefitHeading['ten' . $lang]) ? $benefitHeading['ten' . $lang] : 'error') ?></h2>
+            <p><?= htmlspecialchars_decode(!empty($benefitHeading['noidung' . $lang]) ? $benefitHeading['noidung' . $lang] : 'error') ?></p>
         </div>
         <div class="site-container benefit-grid">
-            <article class="benefit-card">
-                <div class="benefit-icon">01</div>
-                <p>Phù hợp chuyển đổi số của Ngành Giáo Dục</p>
-            </article>
-            <article class="benefit-card">
-                <div class="benefit-icon">75%</div>
-                <p>Tiết kiệm 75% thời gian trong công tác quản lý</p>
-            </article>
-            <article class="benefit-card">
-                <div class="benefit-icon">85%</div>
-                <p>Tăng 85% hiệu quả quản lý trường học</p>
-            </article>
+            <?php foreach ($benefitItems as $k => $item) { ?>
+                <article class="benefit-card" style="--delay: <?= $k * 0.12 ?>s">
+                    <div class="benefit-icon"><?= htmlspecialchars_decode($item['ten' . $lang]) ?></div>
+                    <p><?= htmlspecialchars_decode($item['mota' . $lang]) ?></p>
+                </article>
+            <?php } ?>
         </div>
     </section>
 
@@ -179,15 +187,28 @@ $introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'ass
 
     <section class="schools-section">
         <div class="site-container center section-heading">
-            <h2>CÁC TRƯỜNG TIÊU BIỂU</h2>
+            <h2><?= htmlspecialchars_decode(!empty($schoolsHeading['ten' . $lang]) ? $schoolsHeading['ten' . $lang] : 'CÁC TRƯỜNG TIÊU BIỂU') ?></h2>
         </div>
-        <div class="site-container school-logos">
-            <img src="https://titkul.vn/wp-content/uploads/2024/09/logo-new-THPT-chuyen-Luong-The-Vinh.jpg" alt="">
-            <img src="https://titkul.vn/wp-content/uploads/2024/09/logo-new-THPT-Binh-Khanh.jpg" alt="">
-            <img src="https://titkul.vn/wp-content/uploads/2024/09/logo-new-THCS-Phan-Sao-Nam.jpg" alt="">
-            <img src="https://titkul.vn/wp-content/uploads/2024/09/logo-new-THPT-Han-Thuyen.jpg" alt="">
-            <img src="https://titkul.vn/wp-content/uploads/2024/09/logo-new-TH-Tran-Van-On.jpg" alt="">
-            <img src="https://titkul.vn/wp-content/uploads/2024/09/logo-new-Vo-Truong-Toan.jpg" alt="">
+        <div class="site-container school-logos" aria-label="<?= htmlspecialchars(!empty($schoolsHeading['ten' . $lang]) ? $schoolsHeading['ten' . $lang] : 'CÁC TRƯỜNG TIÊU BIỂU') ?>">
+            <div class="school-logo-track">
+                <?php for ($loop = 0; $loop < 2; $loop++) { ?>
+                    <?php foreach ($schoolLogos as $school) {
+                        $schoolName = !empty($school['ten' . $lang]) ? $school['ten' . $lang] : 'Trường tiêu biểu';
+                        $schoolImage = homeImagePath(!empty($school['photo']) ? $school['photo'] : '', 'assets/images/logo-new-THPT-chuyen-Luong-The-Vinh.jpg');
+                        $schoolLink = !empty($school['link']) ? $school['link'] : '';
+                    ?>
+                        <?php if ($schoolLink != '') { ?>
+                            <a class="school-logo-item" href="<?= $schoolLink ?>">
+                                <img src="<?= $schoolImage ?>" alt="<?= htmlspecialchars(strip_tags($schoolName)) ?>">
+                            </a>
+                        <?php } else { ?>
+                            <div class="school-logo-item">
+                                <img src="<?= $schoolImage ?>" alt="<?= htmlspecialchars(strip_tags($schoolName)) ?>">
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                <?php } ?>
+            </div>
         </div>
     </section>
 
@@ -206,25 +227,21 @@ $introImage = homeImagePath(!empty($intro['photo']) ? $intro['photo'] : '', 'ass
 
     <section class="news-section">
         <div class="site-container center section-heading">
-            <h2>TIN TỨC SỰ KIỆN</h2>
+            <h2><?= htmlspecialchars_decode(!empty($newsHeading['ten' . $lang]) ? $newsHeading['ten' . $lang] : 'TIN TỨC SỰ KIỆN') ?></h2>
         </div>
         <div class="site-container news-grid">
-            <article class="news-card">
-                <img src="https://titkul.vn/wp-content/uploads/2025/08/Titkul-cac-su-kien.jpg" alt="">
-                <h3>TITKUL - CÁC SỰ KIỆN MẦM NON CHUẨN BỊ NĂM HỌC MỚI 2025-2026</h3>
-            </article>
-            <article class="news-card">
-                <img src="https://titkul.vn/wp-content/uploads/2025/07/Titkul-TCN-Nhan-dao-image.jpg" alt="">
-                <h3>TITKUL VÀ COHOTA TẬP HUẤN CHƯƠNG TRÌNH LMS</h3>
-            </article>
-            <article class="news-card">
-                <img src="https://titkul.vn/wp-content/uploads/2025/06/Titkul-AI-dinh-duong-mam-non-1.jpg" alt="">
-                <h3>TITKUL - AI DINH DƯỠNG TRONG CHĂM SÓC SỨC KHỎE TRẺ MẦM NON</h3>
-            </article>
-            <article class="news-card">
-                <img src="https://titkul.vn/wp-content/uploads/2025/06/Titkul-event-Q8-image.jpg" alt="">
-                <h3>TITKUL TẠI SỰ KIỆN CHUYỂN ĐỔI SỐ - KHOA HỌC - CÔNG NGHỆ</h3>
-            </article>
+            <?php foreach ($homeNews as $k => $news) {
+                $newsTitle = !empty($news['ten' . $lang]) ? $news['ten' . $lang] : 'Tin tức sự kiện';
+                $newsImage = homeImagePath(!empty($news['photo']) ? $news['photo'] : '', 'assets/images/Titkul-cac-su-kien.jpg');
+                $newsLink = !empty($news['link']) ? $news['link'] : 'tin-tuc';
+            ?>
+                <article class="news-card" style="--delay: <?= $k * 0.12 ?>s">
+                    <a href="<?= $newsLink ?>">
+                        <img src="<?= $newsImage ?>" alt="<?= htmlspecialchars(strip_tags($newsTitle)) ?>">
+                        <h3><?= htmlspecialchars_decode($newsTitle) ?></h3>
+                    </a>
+                </article>
+            <?php } ?>
         </div>
     </section>
 </main>
